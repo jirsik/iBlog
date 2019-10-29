@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Edit post:</h1>
-    
+        @can('my_article', $post->user_id)
             <div class="card text-white bg-dark mb-3" style="max-width: 50rem;">
                 <div class="card-body">
                     <form action="{{ action('PostsController@update', $post->id) }}" method="POST"> 
@@ -17,10 +17,14 @@
                         </div>
                         <a href="{{action('PostsController@show', $post->id)}}" class="btn btn-light">go back</a>
                         <button type="submit" class="btn btn-light">edit</button>
-                          {{ csrf_field() }} <!--  crossside protection rquired-->
+                        {{ csrf_field() }} <!--  crossside protection rquired-->
                     </form>
                 </div>
-              </div>
+            </div>
+        @else
+            This is not your post.  <a href="{{route('home')}}">Log in</a> to correct account to edit the post.
+        @endcan
+            
         
 
               

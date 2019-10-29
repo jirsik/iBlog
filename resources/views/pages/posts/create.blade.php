@@ -2,7 +2,8 @@
 
 @section('content')
     <h1>Create new post:</h1>
-    
+
+        @auth
             <div class="card text-white bg-dark mb-3" style="max-width: 50rem;">
                 <div class="card-body">
                     <form action="{{ action('PostsController@store') }}" method="POST">
@@ -18,7 +19,12 @@
                         {{ csrf_field() }}  <!-- crossside protection rquired-->
                     </form>
                 </div>
-              </div>
+            </div>
+        @else
+            Please <a href="{{route('home')}}">log in.</a>
+           
+        @endauth
+            
         
 
               
