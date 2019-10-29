@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use Auth; 
+use App\Http\Requests\PostRequest;
 
 
 class PostsController extends Controller
@@ -46,19 +47,20 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         
-        $this->validate($request, [
-            'title'=>'required',
-            'body'=>'required'
-        ]);
+        // $this->validate($request, [
+        //     'title'=>'required',
+        //     'body'=>'required'
+        // ]);
+        // validation is done in PostRequest
         
-        $post = new Post;
-        $post->title = $request->input('title');
-        $post->body = $request->input('body');
-        $post->user_id = Auth::user()->id; //auth()->user()->id; funguje i bez use Auth;
-        $post->save();
+        $post = Post::create([
+            'title' => $request->input('title'),
+            'body' => $request->input('body'),
+            'user_id' => Auth::user()->id,
+        ]);
 
         return redirect('/posts')->with('success', 'Post created!');
     }
@@ -94,17 +96,25 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
-        $this->validate($request, [
-            'title'=>'required',
-            'body'=>'required'
-        ]);
+        // $this->validate($request, [
+        //     'title'=>'required',
+        //     'body'=>'required'
+        // ]);
         
-        $post = Post::find($id);
-        $post->title = $request->input('title');
-        $post->body = $request->input('body');
-        $post->save();
+            $post = Post::find($id);
+            $post -> fill([
+                'title' => $request->input('title'),
+                'body' => $request->input('body'),
+                'user_id' => Auth::user()->id,
+            ]);
+            $post -> save();
+
+        // $post = Post::find($id);
+        // $post->title = $request->input('title');
+        // $post->body = $request->input('body');
+        // $post->save();
 
         return redirect('/posts')->with('success', 'Post updated!');
     }

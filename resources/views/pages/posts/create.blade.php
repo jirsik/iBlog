@@ -9,11 +9,11 @@
                     <form action="{{ action('PostsController@store') }}" method="POST">
                         <div class="form-group">
                             <label for="title">Title:</label>
-                            <input type="text" class="form-control" id="titleForm" name="title" placeholder="Title of your post" >
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Title of your post" >
                         </div>
                         <div class="form-group">
                             <label for="body">Text:</label>
-                            <textarea class="form-control" id="bodyForm" name="body" rows="5" ></textarea>
+                            <textarea class="form-control" id="body" name="body" rows="5" ></textarea>
                         </div>
                         <button type="submit" class="btn btn-light">Create</button>
                         {{ csrf_field() }}  <!-- crossside protection rquired-->
